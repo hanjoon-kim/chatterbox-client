@@ -63,7 +63,6 @@ describe('chatterbox', function() {
         expect(sentMessage).to.deep.equal(message);
         done();
       });
-
     });
 
     describe('fetching', function() {
