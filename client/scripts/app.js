@@ -1,6 +1,7 @@
 // YOUR CODE HERE:
 var App = function() {
   this.server = 'http://parse.sfm8.hackreactor.com/chatterbox/classes/messages';
+  // this.msgArr = [];
 };
 
 // console.log('url display yaaaa: ' + window.location.search);
@@ -21,17 +22,32 @@ App.prototype.init = function() {
   // }
 }
 
-// console.log($('#chats'))
-// console.log($.ajax.args)
+App.prototype.test = function() {
+  alert('solid test');
+}
+
+var storeMessage = function() {
+  alert(document.getElementById('msg').value);
+};
+// var test1 = document.getElementById('username')
+
+
+
 App.prototype.send = function() {
+  var messageSend = {
+    username: 'Kakashi',
+    text: document.getElementById('msg').value,
+    roomname: 'Hiroshima'
+  };
   $.ajax({
     // This is the url you should use to communicate with the parse API server.
     url: 'http://parse.sfm8.hackreactor.com/chatterbox/classes/messages',
     type: 'POST',
-    data: JSON.stringify(message),
+    data: JSON.stringify(messageSend),
     contentType: 'application/json',
     success: function (data) {
-      console.log('chatterbox: Message sent');
+      // console.log(data);
+      return App.prototype.fetch(); 
     },
     error: function (data) {
       // See: https://developer.mozilla.org/en-US/docs/Web/API/console.error
@@ -48,8 +64,9 @@ App.prototype.fetch = function() {
     data: 'order=-createdAt',
     contentType: 'application/json',
     success: function (data) {
-      console.log('chatterbox: Message received');
-      console.log(data);
+      return App.prototype.renderMessage(data);
+      
+      
     },
     error: function (data) {
       // See: https://developer.mozilla.org/en-US/docs/Web/API/console.error
@@ -63,12 +80,14 @@ App.prototype.clearMessages = function() {
   $('#chats').empty();
 }
 
-App.prototype.renderMessage = function() {
+App.prototype.renderMessage = function(data) {
+  $( ".textarea").append(`<p>${data['results'][0]['username']} : </p>`);  
+  $( ".textarea").append(`<p>${data['results'][0]['text']}</p>`);
   //grab username
   //grab message
   //format username/message into an appendable string
 
-  $('#chats').append(`<p>${message}</p>`);
+  // $('#chats').append(`<p>${message}</p>`);
 }
 
 App.prototype.renderRoom = function() {
@@ -86,11 +105,12 @@ App.prototype.handleSubmit = function() {
 
 
 var message = {
-  username: 'Boruto dad',
-  text: 'Ramen is good',
-  roomname: 'Hidden Leaf Village'
+  username: 'Mel Brooks',
+  text: 'It\'s good to be the king',
+  roomname: 'lobby'
 };
 
+
 var app = new App();
-app.send();
-app.fetch();
+
+// app.renderMessage();

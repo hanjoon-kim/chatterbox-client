@@ -21,8 +21,8 @@
   </head>
   <body> 
     <div id="main">
-    <h1>Hokage's Chatbox of Hidden Leaf</h1>
-    <label for="room">Room:</label>
+      <h1>Hokage's Chatbox of Hidden Leaf</h1>
+      <label for="room">Room:</label>
       <select id="room">
         <option value="Fire">Fire</option>
         <option value="Sand">Sand</option>
@@ -30,19 +30,16 @@
         <option value="Obito">Obito did nothing wrong</option>
         <option value="none" selected>--Please choose a room--</option>
       </select>
-      <div>
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="user_name">
-      </div>
+      
       <div>
         <label for="msg">Message:</label>
-        <textarea id="msg" name="user_message"></textarea>
+        <textarea class="input" id="msg" name="user_message"></textarea>
       </div>
       <div class="button">
-        <button type="submit">Send your message</button>
+        <button onclick = "app.send()">Submit</button>
       </div>
+      <div class="textarea" id = "chats">Here is the chat:</div>
     </div>
-    <div id="chats"></div>
     <img src="http://2.bp.blogspot.com/-ValDwIHfsJ0/VifxG0o-VcI/AAAAAAAAApY/YSX039Huhfk/s1600/ngGlCIA.png">
     <script src="env/config.js"></script>
     <script src="scripts/app.js"></script>    
