@@ -22,7 +22,7 @@ App.prototype.init = function() {
 }
 
 // console.log($('#chats'))
-console.log($.ajax.args)
+// console.log($.ajax.args)
 App.prototype.send = function() {
   $.ajax({
     // This is the url you should use to communicate with the parse API server.
@@ -45,16 +45,18 @@ App.prototype.fetch = function() {
     // This is the url you should use to communicate with the parse API server.
     url: 'http://parse.sfm8.hackreactor.com/chatterbox/classes/messages',
     type: 'GET',
-    // data: JSON.stringify(message),
+    data: 'order=-createdAt',
+    contentType: 'application/json',
     success: function (data) {
-      console.log('chatterbox: Message received', data);
+      console.log('chatterbox: Message received');
+      console.log(data);
     },
     error: function (data) {
       // See: https://developer.mozilla.org/en-US/docs/Web/API/console.error
       console.error('chatterbox: Failed to receive message', data);
-    },
-    dataType: 'string'
+    }
   });
+  
 }
 
 App.prototype.clearMessages = function() {
@@ -84,11 +86,11 @@ App.prototype.handleSubmit = function() {
 
 
 var message = {
-  username: 'Mel Brooks',
-  text: 'It\'s good to be the king',
-  roomname: 'lobby'
+  username: 'Boruto dad',
+  text: 'Ramen is good',
+  roomname: 'Hidden Leaf Village'
 };
 
 var app = new App();
-
+app.send();
 app.fetch();
