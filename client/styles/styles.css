@@ -1,15 +1,18 @@
 body {
-    background: #eee;
+    position: fixed;
+    background-image: url("https://wallpaper.wiki/wp-content/uploads/2017/05/Naruto-akatsuki-wallpaper-hd-backgrounds-758x426.jpg");
+    background-size: cover;
     text-align: center;
     padding: 0 25px;
     font-family: arial, sans-serif;
+    
 }
 
 #main, #chats {
-    width: 500px;
+    width: 600px;
     margin: auto;
     text-align: left;
-    background: white;
+    background: pink;
     padding: 50px 60px;
     border: solid #ddd;
     border-width: 0 1px 1px 1px;
@@ -137,6 +140,15 @@ input:focus, textarea:focus {
   /* To give a little highlight on active elements */
   border-color: #000;
 }
+
+textname {
+  /* To properly align multiline text fields with their labels */
+  vertical-align: top;
+
+  /* To give enough room to type some text */
+  height: 5em;
+}
+
 
 textarea {
   /* To properly align multiline text fields with their labels */

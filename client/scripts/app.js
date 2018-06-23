@@ -81,8 +81,9 @@ App.prototype.clearMessages = function() {
 }
 
 App.prototype.renderMessage = function(data) {
-  $( ".textarea").append(`<p>${data['results'][0]['username']} : </p>`);  
-  $( ".textarea").append(`<p>${data['results'][0]['text']}</p>`);
+  
+  $( ".textarea").append(`<span id = "#chat">${data['results'][0]['username']} : <br /></span>`);  
+  $( ".textarea").append(`<span id = "#chat" "#username">${data['results'][0]['text']}<br /></span>`);
   //grab username
   //grab message
   //format username/message into an appendable string
