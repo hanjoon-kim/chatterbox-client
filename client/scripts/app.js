@@ -10,6 +10,7 @@ var App = function() {
 // var test1 = document.getElementById('username') === null? 'no username currently' : document.getElementById('username').value;
 // console.log('this is test1: ' + test1)
 App.prototype.init = function() {
+  app.fetch();
   app.renderRoom();
   // setInterval(app.clearMessages.bind(app), 4000);
   // setInterval(app.fetch.bind(app), 4000);
@@ -19,7 +20,7 @@ App.prototype.init = function() {
   
   //Add friend functionality
   //Make page look pretty
-  // render room after submit
+  //render room after submit
 
   
   // username on click should invoke handleUsername
