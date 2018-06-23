@@ -1,4 +1,5 @@
 // YOUR CODE HERE:
+
 var App = function() {
   this.server = 'http://parse.sfm8.hackreactor.com/chatterbox/classes/messages';
   // this.msgArr = [];
@@ -8,6 +9,16 @@ var App = function() {
 // var test1 = document.getElementById('username') === null? 'no username currently' : document.getElementById('username').value;
 // console.log('this is test1: ' + test1)
 App.prototype.init = function() {
+  app.fetch();
+
+  //To-Do List:
+  //Make the room functionality working
+  //Add friend functionality
+  //Refresh page organically using setInterval
+  //Make page look pretty
+
+
+  
   // username on click should invoke handleUsername
   // ('.username').on('click', function() {
   //   handleUsernameClick();
@@ -34,8 +45,9 @@ var storeMessage = function() {
 
 
 App.prototype.send = function() {
+  var tempUsername = window.location.search.slice(10).replace('%20', ' ');
   var messageSend = {
-    username: 'Kakashi',
+    username: tempUsername,
     text: document.getElementById('msg').value,
     roomname: 'Hiroshima'
   };
@@ -47,7 +59,7 @@ App.prototype.send = function() {
     contentType: 'application/json',
     success: function (data) {
       // console.log(data);
-      return App.prototype.fetch(); 
+      
     },
     error: function (data) {
       // See: https://developer.mozilla.org/en-US/docs/Web/API/console.error
@@ -56,17 +68,22 @@ App.prototype.send = function() {
   });
 }
 
-App.prototype.fetch = function() {
+
+App.prototype.fetch = function(roomname = '') {
   $.ajax({
     // This is the url you should use to communicate with the parse API server.
     url: 'http://parse.sfm8.hackreactor.com/chatterbox/classes/messages',
     type: 'GET',
-    data: 'order=-createdAt',
+    data: { order: '-createdAt',
+            limit: 20 },
     contentType: 'application/json',
     success: function (data) {
-      return App.prototype.renderMessage(data);
-      
-      
+
+      for (var i = 0; i < data.results.length; i++) {
+
+        // console.log(data.results[i].roomname);
+        App.prototype.renderMessage(data.results[i]);
+      } 
     },
     error: function (data) {
       // See: https://developer.mozilla.org/en-US/docs/Web/API/console.error
@@ -81,9 +98,11 @@ App.prototype.clearMessages = function() {
 }
 
 App.prototype.renderMessage = function(data) {
-  
-  $( ".textarea").append(`<span id = "#chat">${data['results'][0]['username']} : <br /></span>`);  
-  $( ".textarea").append(`<span id = "#chat" "#username">${data['results'][0]['text']}<br /></span>`);
+    var messageCheck = `${data.username} : ${data.text}`
+    messageCheck = messageCheck.replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+  // for (let i = 0; i < data.length; i++) {
+    $( ".textarea").append(`<span id = "chat">${messageCheck}<br /></span>`);  
+  // }
   //grab username
   //grab message
   //format username/message into an appendable string
@@ -91,7 +110,44 @@ App.prototype.renderMessage = function(data) {
   // $('#chats').append(`<p>${message}</p>`);
 }
 
-App.prototype.renderRoom = function() {
+App.prototype.renderRoom = function(data) {
+
+  $.ajax({
+    url: 'http://parse.sfm8.hackreactor.com/chatterbox/classes/messages',
+    type: 'GET',
+    data: { order: '-createdAt',
+            limit: 20 },
+    contentType: 'application/json',
+    success: function (data) {
+      var setRoomname = new Set;
+      for (var i = 0; i < data.results.length; i++) {
+        setRoomname.add(data.results[i].roomname); 
+        App.prototype.renderMessage(data.results[i]);
+      }
+      console.log(setRoomname);
+      var arrayRoomname = [...setRoomname];
+      for (var j = 0; j < arrayRoomname.length; j++) {
+        $( ".room").append(`<option value = "roomname">${arrayRoomname[j]}</option>`);  
+      }
+      
+      $('#roomButton').click(function() {
+        App.prototype.clearMessages();
+        for (var i = 0; i < data.results.length; i++) {
+          if (data.results[i].roomname == $('#roomList option:selected').text()) {
+            App.prototype.renderMessage(data.results[i]);
+          }
+          // console.log(data.results[i].roomname);
+          
+        }
+        // console.log($('#roomList option:selected').text());
+      });
+ 
+    },
+    error: function (data) {
+      // See: https://developer.mozilla.org/en-US/docs/Web/API/console.error
+      console.error('chatterbox: Failed to receive message', data);
+    }
+  });
   $('#roomSelect').append("<p>superLobby</p>");
 
 }
@@ -113,5 +169,6 @@ var message = {
 
 
 var app = new App();
-
-// app.renderMessage();
+app.init();
+// app.fetch();
+app.renderRoom();

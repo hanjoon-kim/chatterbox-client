@@ -8,12 +8,22 @@ body {
     
 }
 
-#main, #chats {
+#main {
     width: 600px;
     margin: auto;
     text-align: left;
-    background: pink;
-    padding: 50px 60px;
+    background: coral;
+    padding: 50px 0px;
+    border: solid #ddd;
+    border-width: 0 1px 1px 1px;
+}
+
+#chats {
+    width: 600px;
+    margin: auto;
+    text-align: left;
+    background: white;
+    padding: 50px 0px;
     border: solid #ddd;
     border-width: 0 1px 1px 1px;
 }
