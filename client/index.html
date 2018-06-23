@@ -3,9 +3,10 @@
   <head>
     <meta charset="utf-8">
     <title>Hokage's Chatbox of Hidden Leaf</title>
-    <link rel="stylesheet" href="styles/styles.css">
+    
     <!-- dependencies -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles/styles.css">
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/underscore/underscore.js"></script>
     <script>
@@ -25,21 +26,23 @@
       <h1>Hokage's Chatbox of Hidden Leaf</h1>
       <label for="room">Room:</label>
       <select class="room" id="roomList">
+        <option value="all" selected>All Chat</option>
         <option value="none" selected>--Please choose a room--</option>
       </select>
-      <input type="button" id="roomButton" value="Change Room" />
+      <input class="btn-info" type="button" id="roomButton" value="Change Room" />
       
       <div>
         <label for="msg">Message:</label>
         <textarea class="input" id="msg" name="user_message"></textarea>
       </div>
       <div class="button">
-        <button onclick = "app.send()">Submit</button>
+        <button class ="btn btn-success" onclick = "app.send()">Submit</button>
       </div>
       <div class="button">
-        <button onclick = "app.clearMessages()">Clear Messages</button>
+        <button class="btn btn-primary" onclick = "app.clearMessages()">Clear Messages</button>
       </div>
-      <div class="textarea" id = "chats">Here is the chat:<br /></div>
+      
+      <div class="textarea" "list-group" id = "chats">Here is the chat:<br /></div>
     </div>
     <img src="http://2.bp.blogspot.com/-ValDwIHfsJ0/VifxG0o-VcI/AAAAAAAAApY/YSX039Huhfk/s1600/ngGlCIA.png">
     <script src="env/config.js"></script>

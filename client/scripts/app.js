@@ -2,6 +2,7 @@
 
 var App = function() {
   this.server = 'http://parse.sfm8.hackreactor.com/chatterbox/classes/messages';
+  this.currentRoom;
   // this.msgArr = [];
 };
 
@@ -9,14 +10,16 @@ var App = function() {
 // var test1 = document.getElementById('username') === null? 'no username currently' : document.getElementById('username').value;
 // console.log('this is test1: ' + test1)
 App.prototype.init = function() {
-  app.fetch();
-
+  app.renderRoom();
+  // setInterval(app.clearMessages.bind(app), 4000);
+  // setInterval(app.fetch.bind(app), 4000);
+  // setInterval(function() {console.log('count')}, 2000)
   //To-Do List:
-  //Make the room functionality working
+  
+  
   //Add friend functionality
-  //Refresh page organically using setInterval
   //Make page look pretty
-
+  // render room after submit
 
   
   // username on click should invoke handleUsername
@@ -33,9 +36,6 @@ App.prototype.init = function() {
   // }
 }
 
-App.prototype.test = function() {
-  alert('solid test');
-}
 
 var storeMessage = function() {
   alert(document.getElementById('msg').value);
@@ -49,7 +49,7 @@ App.prototype.send = function() {
   var messageSend = {
     username: tempUsername,
     text: document.getElementById('msg').value,
-    roomname: 'Hiroshima'
+    roomname: currentRoom
   };
   $.ajax({
     // This is the url you should use to communicate with the parse API server.
@@ -69,16 +69,16 @@ App.prototype.send = function() {
 }
 
 
-App.prototype.fetch = function(roomname = '') {
+App.prototype.fetch = function() {
   $.ajax({
     // This is the url you should use to communicate with the parse API server.
     url: 'http://parse.sfm8.hackreactor.com/chatterbox/classes/messages',
     type: 'GET',
     data: { order: '-createdAt',
-            limit: 20 },
+            limit: 25 },
     contentType: 'application/json',
     success: function (data) {
-
+      console.log('YOu have bad luck');
       for (var i = 0; i < data.results.length; i++) {
 
         // console.log(data.results[i].roomname);
@@ -98,6 +98,7 @@ App.prototype.clearMessages = function() {
 }
 
 App.prototype.renderMessage = function(data) {
+    console.log('new render: ' + data);
     var messageCheck = `${data.username} : ${data.text}`
     messageCheck = messageCheck.replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
   // for (let i = 0; i < data.length; i++) {
@@ -111,7 +112,6 @@ App.prototype.renderMessage = function(data) {
 }
 
 App.prototype.renderRoom = function(data) {
-
   $.ajax({
     url: 'http://parse.sfm8.hackreactor.com/chatterbox/classes/messages',
     type: 'GET',
@@ -131,6 +131,10 @@ App.prototype.renderRoom = function(data) {
       }
       
       $('#roomButton').click(function() {
+        currentRoom = $('#roomList option:selected').text();
+        if (currentRoom === 'All Chat') {
+          App.prototype.fetch();
+        }
         App.prototype.clearMessages();
         for (var i = 0; i < data.results.length; i++) {
           if (data.results[i].roomname == $('#roomList option:selected').text()) {
@@ -169,6 +173,7 @@ var message = {
 
 
 var app = new App();
+
+
+  
 app.init();
-// app.fetch();
-app.renderRoom();
